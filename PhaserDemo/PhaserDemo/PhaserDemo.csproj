@@ -31,9 +31,7 @@
   <ItemGroup>
     <TypeScriptCompile Include="app.ts" />
     <TypeScriptCompile Include="dep\p2.d.ts" />
-    <TypeScriptCompile Include="dep\phaser.comments.d.ts" />
     <TypeScriptCompile Include="dep\phaser.d.ts" />
-    <TypeScriptCompile Include="dep\pixi.comments.d.ts" />
     <TypeScriptCompile Include="dep\pixi.d.ts" />
   </ItemGroup>
   <ItemGroup>
