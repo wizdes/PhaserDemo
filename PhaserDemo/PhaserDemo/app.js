@@ -1,19 +1,26 @@
-var SimpleGame = (function () {
-    function SimpleGame() {
-        this.game = new Phaser.Game(800, 600, Phaser.AUTO, 'content', { preload: this.preload, create: this.create });
-    }
-    SimpleGame.prototype.preload = function () {
-        this.game.load.image('logo', 'phaser-logo-small.png');
-    };
-    SimpleGame.prototype.create = function () {
-        var logo = this.game.add.sprite(this.game.world.centerX, this.game.world.centerY, 'logo');
-        logo.anchor.setTo(0.5, 0.5);
-        logo.scale.setTo(0.2, 0.2);
-        this.game.add.tween(logo.scale).to({ x: 1, y: 1 }, 2000, Phaser.Easing.Bounce.Out, true);
-    };
-    return SimpleGame;
-})();
-window.onload = function () {
-    var game = new SimpleGame();
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
+var Namespace;
+(function (Namespace) {
+    var Game = (function (_super) {
+        __extends(Game, _super);
+        function Game() {
+            _super.call(this, {
+                width: 760,
+                height: 420,
+                renderer: Phaser.AUTO
+            });
+            this.state.add('preloader', Namespace.State.Preloader, true);
+            this.state.add('game', Namespace.State.Game);
+        }
+        return Game;
+    })(Phaser.Game);
+    Namespace.Game = Game;
+})(Namespace || (Namespace = {}));
+// export Game to window
+var Game = Namespace.Game;
+var loadGame = new Game();
 //# sourceMappingURL=app.js.map

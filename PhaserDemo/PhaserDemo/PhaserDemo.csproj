@@ -23,16 +23,33 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="app.css" />
+    <Content Include="assets\images\floor.png" />
+    <Content Include="assets\images\goldCoin.png" />
+    <Content Include="assets\images\player.png" />
+    <Content Include="assets\images\player_dead.png" />
+    <Content Include="assets\images\player_duck.png" />
+    <Content Include="assets\images\preloader-bar.png" />
+    <Content Include="assets\images\tiles_spritesheet.png" />
+    <Content Include="assets\images\yellow-block.png" />
     <Content Include="dep\phaser.js" />
     <Content Include="dep\phaser.min.js" />
     <Content Include="index.html" />
+    <Content Include="phaser-logo-small.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="web.config" />
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="app.ts" />
+    <TypeScriptCompile Include="boot.ts" />
     <TypeScriptCompile Include="dep\p2.d.ts" />
     <TypeScriptCompile Include="dep\phaser.d.ts" />
     <TypeScriptCompile Include="dep\pixi.d.ts" />
+    <TypeScriptCompile Include="game.ts" />
+    <TypeScriptCompile Include="gameController.ts" />
+    <TypeScriptCompile Include="preload-bar.ts" />
+    <TypeScriptCompile Include="preloader.ts" />
+    <TypeScriptCompile Include="SideScroller.ts" />
   </ItemGroup>
   <ItemGroup>
     <None Include="web.Debug.config">
@@ -42,6 +59,7 @@
       <DependentUpon>web.config</DependentUpon>
     </None>
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">12.0</VisualStudioVersion>
   </PropertyGroup>
