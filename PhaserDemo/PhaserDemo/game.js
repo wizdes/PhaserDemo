@@ -21,23 +21,24 @@ var Namespace;
                 this.game.time.advancedTiming = true;
             };
             Game.prototype.create = function () {
+                var newItem;
                 //initiate groups, we'll recycle elements
                 this.floors = this.game.add.group();
                 this.floors.enableBody = true;
                 for (var i = 0; i < 12; i++) {
-                    this.newItem = this.floors.create(i * this.tileSize, this.game.world.height - this.tileSize, 'floor');
-                    this.newItem.body.immovable = true;
-                    this.newItem.body.velocity.x = this.levelSpeed;
+                    newItem = this.floors.create(i * this.tileSize, this.game.world.height - this.tileSize, 'floor');
+                    newItem.body.immovable = true;
+                    newItem.body.velocity.x = this.levelSpeed;
                 }
                 //keep track of the last floor
-                this.lastFloor = this.newItem;
+                this.lastFloor = newItem;
                 //keep track of the last element
                 this.lastCliff = false;
                 this.lastVertical = false;
                 this.verticalObstacles = this.game.add.group();
                 this.verticalObstacles.enableBody = true;
                 this.verticalObstacles.createMultiple(12, 'yellowBlock');
-                this.verticalObstacles.setAll('checkWorldBounds', true);
+                this.verticalObstacles.setAll('immovable', true);
                 this.verticalObstacles.setAll('outOfBoundsKill', true);
                 this.coins = this.game.add.group();
                 this.coins.enableBody = true;
@@ -58,7 +59,7 @@ var Namespace;
                 //move player with cursor keys
                 this.cursors = this.game.input.keyboard.createCursorKeys();
                 //init game controller
-                //this.initGameController();
+                this.initGameController();
             };
             Game.prototype.update = function () {
                 //collision
@@ -109,9 +110,11 @@ var Namespace;
                             this.lastCliff = false;
                             this.lastVertical = true;
                             block = this.verticalObstacles.getFirstExists(false);
-                            block.reset(this.lastFloor.body.x + this.tileSize, this.game.world.height - 3 * this.tileSize);
-                            block.body.velocity.x = this.levelSpeed;
-                            block.body.immovable = true;
+                            if (block) {
+                                block.reset(this.lastFloor.body.x + this.tileSize, this.game.world.height - 3 * this.tileSize);
+                                block.body.velocity.x = this.levelSpeed;
+                                block.body.immovable = true;
+                            }
                             if (Math.random() < this.probMoreVertical) {
                                 block = this.verticalObstacles.getFirstExists(false);
                                 if (block) {
@@ -194,7 +197,7 @@ var Namespace;
                 this.coins.enableBody = true;
             };
             Game.prototype.gameOver = function () {
-                this.game.state.start('Game');
+                this.game.state.start('game');
             };
             Game.prototype.playerJump = function () {
                 if (this.player.body.touching.down) {

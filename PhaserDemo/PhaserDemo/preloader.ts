@@ -11,12 +11,26 @@
             this.load.image('goldCoin', 'assets/images/goldCoin.png');
             this.load.image('floor', 'assets/images/floor.png');
             this.load.image('yellowBlock', 'assets/images/yellow-block.png');
-            this.load.audio('coin', 'assets/audio/coin.wav');
         }
 
         create() {
             this.loadingBar.setFillPercent(100);
             var tween = this.game.add.tween(this.loadingBar).to({ alpha: 0 }, 1000, Phaser.Easing.Linear.None, true);
+
+            //loading screen will have a white background
+            this.game.stage.backgroundColor = '#fff';
+
+            //scaling options
+            this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
+    
+            //have the game centered horizontally
+            this.scale.pageAlignHorizontally = true;
+            this.scale.pageAlignVertically = true;
+
+            //physics system
+            this.game.physics.startSystem(Phaser.Physics.ARCADE);
+
+
             tween.onComplete.add(this.startGame, this);
         }
 
