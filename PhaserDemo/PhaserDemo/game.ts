@@ -1,4 +1,4 @@
-﻿declare var GameController: any; // Magic
+﻿declare var GameController: any; // Magicically allow typescript to pick this up
 
 module Namespace.State {
     export class Game extends Phaser.State {
@@ -52,7 +52,6 @@ module Namespace.State {
 
             //create player
             this.player = this.game.add.sprite(250, 320, 'player');
-            // /this.player.scale.setTo(0.8);
 
             //enable physics on the player
             this.game.physics.arcade.enable(this.player);
@@ -72,9 +71,6 @@ module Namespace.State {
 
             //move player with cursor keys
             this.cursors = this.game.input.keyboard.createCursorKeys();
-
-            //init game controller
-            this.initGameController();
         }
 
         pressingDown;
@@ -186,56 +182,6 @@ module Namespace.State {
             collectable.destroy();
         }
 
-        initGameController() {
-            if (!GameController.hasInitiated) {
-                var that = this;
-
-                GameController.init({
-                    right: {
-                        type: 'none',
-                    },
-                    left: {
-                        type: 'buttons',
-                        buttons: [
-                            false,
-                            {
-                                label: 'J',
-                                touchStart: function() {
-                                    if (!that.player.alive) {
-                                        return;
-                                    }
-                                    that.playerJump();
-                                }
-                            },
-                            false,
-                            {
-                                label: 'D',
-                                touchStart: function() {
-                                    if (!that.player.alive) {
-                                        return;
-                                    }
-                                    that.pressingDown = true;
-                                    that.playerDuck();
-                                },
-                                touchEnd: function() {
-                                    that.pressingDown = false;
-                                }
-                            }
-                        ]
-                    },
-                });
-                GameController.hasInitiated = true;
-            }
-        }
-
-        map;
-
-        //create coins
-        createCoins() {
-            this.coins = this.game.add.group();
-            this.coins.enableBody = true;
-        }
-
         gameOver() {
             this.game.state.start('game');
         }
@@ -256,7 +202,6 @@ module Namespace.State {
         }
 
         render() {
-            //this.game.debug.text(this.game.time.fps || '--', 20, 70, "#00ff00", "40px Courier");
         }
     }
 }

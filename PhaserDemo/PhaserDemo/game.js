@@ -44,7 +44,6 @@ var Namespace;
                 this.coins.enableBody = true;
                 //create player
                 this.player = this.game.add.sprite(250, 320, 'player');
-                // /this.player.scale.setTo(0.8);
                 //enable physics on the player
                 this.game.physics.arcade.enable(this.player);
                 //player gravity
@@ -58,8 +57,6 @@ var Namespace;
                 this.game.camera.follow(this.player);
                 //move player with cursor keys
                 this.cursors = this.game.input.keyboard.createCursorKeys();
-                //init game controller
-                this.initGameController();
             };
             Game.prototype.update = function () {
                 //collision
@@ -151,51 +148,6 @@ var Namespace;
                 //remove sprite
                 collectable.destroy();
             };
-            Game.prototype.initGameController = function () {
-                if (!GameController.hasInitiated) {
-                    var that = this;
-                    GameController.init({
-                        right: {
-                            type: 'none',
-                        },
-                        left: {
-                            type: 'buttons',
-                            buttons: [
-                                false,
-                                {
-                                    label: 'J',
-                                    touchStart: function () {
-                                        if (!that.player.alive) {
-                                            return;
-                                        }
-                                        that.playerJump();
-                                    }
-                                },
-                                false,
-                                {
-                                    label: 'D',
-                                    touchStart: function () {
-                                        if (!that.player.alive) {
-                                            return;
-                                        }
-                                        that.pressingDown = true;
-                                        that.playerDuck();
-                                    },
-                                    touchEnd: function () {
-                                        that.pressingDown = false;
-                                    }
-                                }
-                            ]
-                        },
-                    });
-                    GameController.hasInitiated = true;
-                }
-            };
-            //create coins
-            Game.prototype.createCoins = function () {
-                this.coins = this.game.add.group();
-                this.coins.enableBody = true;
-            };
             Game.prototype.gameOver = function () {
                 this.game.state.start('game');
             };
@@ -212,7 +164,6 @@ var Namespace;
                 this.player.isDucked = true;
             };
             Game.prototype.render = function () {
-                //this.game.debug.text(this.game.time.fps || '--', 20, 70, "#00ff00", "40px Courier");
             };
             return Game;
         })(Phaser.State);
