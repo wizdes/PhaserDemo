@@ -3,7 +3,7 @@
 
         constructor() {
             super({
-                width: 760,
+                width: 600,
                 height: 420,
                 renderer: Phaser.AUTO
             });

@@ -9,13 +9,15 @@ module Namespace.State {
         player;
         cursors;
         floors;
+        pressingDown;
         verticalObstacles;
 
         levelSpeed = -250;        
         tileSize = 70;
-        probCliff = 0.4;
+        probCliff = 0.3;
         probVertical = 0.4;
         probMoreVertical = 0.5;
+        probCoin = 0.1;
 
 
         preload() {
@@ -43,12 +45,14 @@ module Namespace.State {
 
             this.verticalObstacles = this.game.add.group();
             this.verticalObstacles.enableBody = true;
-            this.verticalObstacles.createMultiple(12, 'yellowBlock');
+            this.verticalObstacles.createMultiple(20, 'yellowBlock');
             this.verticalObstacles.setAll('immovable', true);
             this.verticalObstacles.setAll('outOfBoundsKill', true);
 
             this.coins = this.game.add.group();
             this.coins.enableBody = true;
+            this.coins.createMultiple(20, 'goldCoin');
+            this.coins.setAll('immovable', true);
 
             //create player
             this.player = this.game.add.sprite(250, 320, 'player');
@@ -57,7 +61,7 @@ module Namespace.State {
             this.game.physics.arcade.enable(this.player);
 
             //player gravity
-            this.player.body.gravity.y = 1000;
+            this.player.body.gravity.y = 1500;
 
             //properties when the player is ducked and standing, so we can use in update()
             var playerDuckImg = this.game.cache.getImage('playerDuck');
@@ -73,13 +77,11 @@ module Namespace.State {
             this.cursors = this.game.input.keyboard.createCursorKeys();
         }
 
-        pressingDown;
-
         update() {
             //collision
             this.game.physics.arcade.collide(this.player, this.floors, this.playerHit, null, this);
             this.game.physics.arcade.collide(this.player, this.verticalObstacles, this.playerHit, null, this);
-            //this.game.physics.arcade.overlap(this.player, this.coins, this.collect, null, this);
+            this.game.physics.arcade.overlap(this.player, this.coins, this.collect, null, this);
 
             //only respond to keys and keep the speed if the player is alive
             if (this.player.alive) {
@@ -131,6 +133,12 @@ module Namespace.State {
                         this.lastCliff = false;
                         this.lastVertical = true;
                         block = this.verticalObstacles.getFirstExists(false);
+                        if (!block) {
+                            block = this.verticalObstacles.getFirstExists(true);
+                            if (block.x > this.lastFloor.body.x - this.game.world.width*2) {
+                                block = null;
+                            }
+                        }
                         if (block) {
                             block.reset(this.lastFloor.body.x + this.tileSize, this.game.world.height - 3 * this.tileSize);
                             block.body.velocity.x = this.levelSpeed;
@@ -139,6 +147,12 @@ module Namespace.State {
 
                         if (Math.random() < this.probMoreVertical) {
                             block = this.verticalObstacles.getFirstExists(false);
+                            if (!block) {
+                                block = this.verticalObstacles.getFirstExists(true);
+                                if (block.x > this.lastFloor.body.x - this.game.world.width*2) {
+                                    block = null;
+                                }
+                            }
                             if (block) {
                                 block.reset(this.lastFloor.body.x + this.tileSize, this.game.world.height - 4 * this.tileSize);
                                 block.body.velocity.x = this.levelSpeed;
@@ -146,6 +160,20 @@ module Namespace.State {
                             }
                         }
 
+                        if (Math.random() < this.probCoin) {
+                            var coin = this.coins.getFirstExists(false);
+                            if (!coin) {
+                                coin = this.coins.getFirstExists(true);
+                                if (coin.x > this.lastFloor.body.x - this.game.world.width*2) {
+                                    coin = null;
+                                }
+                            }
+                            if (coin) {
+                                coin.reset(this.lastFloor.body.x + this.tileSize, this.game.world.height - 5 * this.tileSize);
+                                coin.body.velocity.x = this.levelSpeed;
+                                coin.body.immovable = true;                                
+                            }
+                        }
                     }
                     else {
                         this.lastCliff = false;

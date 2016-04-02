@@ -13,9 +13,10 @@ var Namespace;
                 _super.apply(this, arguments);
                 this.levelSpeed = -250;
                 this.tileSize = 70;
-                this.probCliff = 0.4;
+                this.probCliff = 0.3;
                 this.probVertical = 0.4;
                 this.probMoreVertical = 0.5;
+                this.probCoin = 0.1;
             }
             Game.prototype.preload = function () {
                 this.game.time.advancedTiming = true;
@@ -37,17 +38,19 @@ var Namespace;
                 this.lastVertical = false;
                 this.verticalObstacles = this.game.add.group();
                 this.verticalObstacles.enableBody = true;
-                this.verticalObstacles.createMultiple(12, 'yellowBlock');
+                this.verticalObstacles.createMultiple(20, 'yellowBlock');
                 this.verticalObstacles.setAll('immovable', true);
                 this.verticalObstacles.setAll('outOfBoundsKill', true);
                 this.coins = this.game.add.group();
                 this.coins.enableBody = true;
+                this.coins.createMultiple(20, 'goldCoin');
+                this.coins.setAll('immovable', true);
                 //create player
                 this.player = this.game.add.sprite(250, 320, 'player');
                 //enable physics on the player
                 this.game.physics.arcade.enable(this.player);
                 //player gravity
-                this.player.body.gravity.y = 1000;
+                this.player.body.gravity.y = 1500;
                 //properties when the player is ducked and standing, so we can use in update()
                 var playerDuckImg = this.game.cache.getImage('playerDuck');
                 this.player['duckedDimensions'] = { width: playerDuckImg.width, height: playerDuckImg.height };
@@ -62,7 +65,7 @@ var Namespace;
                 //collision
                 this.game.physics.arcade.collide(this.player, this.floors, this.playerHit, null, this);
                 this.game.physics.arcade.collide(this.player, this.verticalObstacles, this.playerHit, null, this);
-                //this.game.physics.arcade.overlap(this.player, this.coins, this.collect, null, this);
+                this.game.physics.arcade.overlap(this.player, this.coins, this.collect, null, this);
                 //only respond to keys and keep the speed if the player is alive
                 if (this.player.alive) {
                     if (this.player.body.touching.down) {
@@ -107,6 +110,12 @@ var Namespace;
                             this.lastCliff = false;
                             this.lastVertical = true;
                             block = this.verticalObstacles.getFirstExists(false);
+                            if (!block) {
+                                block = this.verticalObstacles.getFirstExists(true);
+                                if (block.x > this.lastFloor.body.x - this.game.world.width * 2) {
+                                    block = null;
+                                }
+                            }
                             if (block) {
                                 block.reset(this.lastFloor.body.x + this.tileSize, this.game.world.height - 3 * this.tileSize);
                                 block.body.velocity.x = this.levelSpeed;
@@ -114,10 +123,30 @@ var Namespace;
                             }
                             if (Math.random() < this.probMoreVertical) {
                                 block = this.verticalObstacles.getFirstExists(false);
+                                if (!block) {
+                                    block = this.verticalObstacles.getFirstExists(true);
+                                    if (block.x > this.lastFloor.body.x - this.game.world.width * 2) {
+                                        block = null;
+                                    }
+                                }
                                 if (block) {
                                     block.reset(this.lastFloor.body.x + this.tileSize, this.game.world.height - 4 * this.tileSize);
                                     block.body.velocity.x = this.levelSpeed;
                                     block.body.immovable = true;
+                                }
+                            }
+                            if (Math.random() < this.probCoin) {
+                                var coin = this.coins.getFirstExists(false);
+                                if (!coin) {
+                                    coin = this.coins.getFirstExists(true);
+                                    if (coin.x > this.lastFloor.body.x - this.game.world.width * 2) {
+                                        coin = null;
+                                    }
+                                }
+                                if (coin) {
+                                    coin.reset(this.lastFloor.body.x + this.tileSize, this.game.world.height - 5 * this.tileSize);
+                                    coin.body.velocity.x = this.levelSpeed;
+                                    coin.body.immovable = true;
                                 }
                             }
                         }

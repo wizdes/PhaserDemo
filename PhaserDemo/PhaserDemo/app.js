@@ -9,7 +9,7 @@ var Namespace;
         __extends(Game, _super);
         function Game() {
             _super.call(this, {
-                width: 760,
+                width: 600,
                 height: 420,
                 renderer: Phaser.AUTO
             });
