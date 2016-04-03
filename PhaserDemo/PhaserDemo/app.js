@@ -13,8 +13,9 @@ var Namespace;
                 height: 420,
                 renderer: Phaser.AUTO
             });
-            this.state.add('preloader', Namespace.State.Preloader, true);
             this.state.add('game', Namespace.State.Game);
+            this.state.add('mainmenu', Namespace.State.MainMenu);
+            this.state.add('preloader', Namespace.State.Preloader, true);
         }
         return Game;
     })(Phaser.Game);

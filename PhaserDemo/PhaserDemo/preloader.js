@@ -21,6 +21,7 @@ var Namespace;
                 this.load.image('goldCoin', 'assets/images/goldCoin.png');
                 this.load.image('floor', 'assets/images/floor.png');
                 this.load.image('yellowBlock', 'assets/images/yellow-block.png');
+                this.load.image('play', 'assets/images/playbutton.png');
                 this.load.spritesheet('playerRun', 'assets/images/alienWalking.png', 70, 96);
             };
             Preloader.prototype.create = function () {
@@ -29,7 +30,7 @@ var Namespace;
                 //loading screen will have a white background
                 this.game.stage.backgroundColor = '#fff';
                 //scaling options
-                this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
+                //this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
                 //have the game centered horizontally
                 //this.scale.pageAlignHorizontally = true;
                 //this.scale.pageAlignVertically = true;
@@ -38,7 +39,7 @@ var Namespace;
                 tween.onComplete.add(this.startGame, this);
             };
             Preloader.prototype.startGame = function () {
-                this.game.state.start('game', true);
+                this.game.state.start('mainmenu', true);
             };
             Preloader.prototype.loadUpdate = function () {
                 this.loadingBar.setFillPercent(this.load.progress);

@@ -26,6 +26,8 @@ var Namespace;
                 //initiate groups, we'll recycle elements
                 this.floors = this.game.add.group();
                 this.floors.enableBody = true;
+                //loading screen will have a white background
+                this.game.stage.backgroundColor = '#fff';
                 for (var i = 0; i < 12; i++) {
                     newItem = this.floors.create(i * this.tileSize, this.game.world.height - this.tileSize, 'floor');
                     newItem.body.immovable = true;
@@ -182,7 +184,7 @@ var Namespace;
                 collectable.destroy();
             };
             Game.prototype.gameOver = function () {
-                this.game.state.start('game');
+                this.game.state.start('mainmenu', true);
             };
             Game.prototype.playerJump = function () {
                 if (this.player.body.touching.down) {

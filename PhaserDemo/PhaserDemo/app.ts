@@ -8,8 +8,9 @@
                 renderer: Phaser.AUTO
             });
 
-            this.state.add('preloader', State.Preloader, true);
             this.state.add('game', State.Game);
+            this.state.add('mainmenu', State.MainMenu);
+            this.state.add('preloader', State.Preloader, true);
         }
     }
 }

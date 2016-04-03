@@ -30,6 +30,10 @@ module Namespace.State {
             this.floors = this.game.add.group();
             this.floors.enableBody = true;
 
+            //loading screen will have a white background
+            this.game.stage.backgroundColor = '#fff';
+
+
             for (var i = 0; i < 12; i++) {
                 newItem = this.floors.create(i * this.tileSize, this.game.world.height - this.tileSize, 'floor');
                 newItem.body.immovable = true;
@@ -215,7 +219,7 @@ module Namespace.State {
         }
 
         gameOver() {
-            this.game.state.start('game');
+            this.game.state.start('mainmenu', true);
         }
 
         playerJump() {

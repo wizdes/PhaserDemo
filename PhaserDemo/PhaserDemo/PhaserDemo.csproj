@@ -48,6 +48,7 @@
     <TypeScriptCompile Include="dep\pixi.d.ts" />
     <TypeScriptCompile Include="game.ts" />
     <TypeScriptCompile Include="gameController.ts" />
+    <TypeScriptCompile Include="mainmenu.ts" />
     <TypeScriptCompile Include="preload-bar.ts" />
     <TypeScriptCompile Include="preloader.ts" />
     <TypeScriptCompile Include="SideScroller.ts" />
