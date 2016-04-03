@@ -55,7 +55,9 @@ module Namespace.State {
             this.coins.setAll('immovable', true);
 
             //create player
-            this.player = this.game.add.sprite(250, 320, 'player');
+            this.player = this.game.add.sprite(250, 320, 'playerRun');
+            var walk = this.player.animations.add('walk');
+            this.player.play('walk', 10, true);
 
             //enable physics on the player
             this.game.physics.arcade.enable(this.player);
@@ -101,7 +103,9 @@ module Namespace.State {
 
                 if (!this.cursors.down.isDown && this.player.isDucked && !this.pressingDown) {
                     //change image and update the body size for the physics engine
-                    this.player.loadTexture('player');
+                    //this.player.loadTexture('player');
+                    this.player.loadTexture('playerRun');
+                    this.player.play('walk', 10, true);
                     this.player.body.setSize(this.player.standDimensions.width, this.player.standDimensions.height);
                     this.player.isDucked = false;
                 }

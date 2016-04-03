@@ -21,6 +21,7 @@ var Namespace;
                 this.load.image('goldCoin', 'assets/images/goldCoin.png');
                 this.load.image('floor', 'assets/images/floor.png');
                 this.load.image('yellowBlock', 'assets/images/yellow-block.png');
+                this.load.spritesheet('playerRun', 'assets/images/alienWalking.png', 70, 96);
             };
             Preloader.prototype.create = function () {
                 this.loadingBar.setFillPercent(100);
