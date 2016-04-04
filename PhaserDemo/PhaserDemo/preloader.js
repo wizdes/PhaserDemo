@@ -27,9 +27,10 @@ var Namespace;
             Preloader.prototype.create = function () {
                 this.loadingBar.setFillPercent(100);
                 var tween = this.game.add.tween(this.loadingBar).to({ alpha: 0 }, 1000, Phaser.Easing.Linear.None, true);
-                //loading screen will have a white background
+                // loading screen will have a white background
                 this.game.stage.backgroundColor = '#fff';
-                //scaling options
+                // scaling options
+                // this makes it scale to the screen
                 //this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
                 //have the game centered horizontally
                 //this.scale.pageAlignHorizontally = true;

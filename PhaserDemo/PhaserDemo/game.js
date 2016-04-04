@@ -11,6 +11,8 @@ var Namespace;
             __extends(Game, _super);
             function Game() {
                 _super.apply(this, arguments);
+                this.w = 600;
+                this.h = 420;
                 this.levelSpeed = -250;
                 this.tileSize = 70;
                 this.probCliff = 0.3;
@@ -64,6 +66,23 @@ var Namespace;
                 this.game.camera.follow(this.player);
                 //move player with cursor keys
                 this.cursors = this.game.input.keyboard.createCursorKeys();
+                this.pause_label = this.game.add.text(this.w - 100, 20, 'Pause', { font: '24px Arial', fill: '#000' });
+                this.pause_label.inputEnabled = true;
+                this.pause_label.events.onInputDown.add(function (event) {
+                    event.game.paused = true;
+                    // And a label to illustrate which menu item was chosen. (This is not necessary)
+                    this.choiceLabel = event.game.add.text(this.w / 2, this.h - 150, 'Click outside menu to continue', { font: '30px Arial', fill: '#000' });
+                    this.choiceLabel.anchor.setTo(0.5, 0.5);
+                }, self);
+                this.game.input.onDown.add(this.unpause, self);
+            };
+            Game.prototype.pause = function () {
+            };
+            Game.prototype.unpause = function (event) {
+                if (event.game && event.game.paused) {
+                    this.choiceLabel.destroy();
+                    event.game.paused = false;
+                }
             };
             Game.prototype.update = function () {
                 //collision
