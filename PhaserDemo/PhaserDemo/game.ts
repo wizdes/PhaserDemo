@@ -12,6 +12,7 @@ module Namespace.State {
         pressingDown;
         verticalObstacles;
         pause_label;
+        end_label;
         choiceLabel;
         w = 600;
         h = 420;
@@ -248,6 +249,17 @@ module Namespace.State {
         }
 
         gameOver() {
+            this.end_label = this.game.add.text(this.w - 100, 20, 'GameOver', { font: '24px Arial', fill: '#000' });
+            var logo = this.game.add.sprite(0, 0, 'black');
+            logo.width = 500;
+            logo.height = 500;
+            this.pause_label.destroy();
+                        
+            this.game.add.tween(logo).to({ alpha: 1 }, 500, Phaser.Easing.Linear.None, true, 0, 1000, true);
+            this.game.time.events.add(1000, this.restart, this);
+        }
+
+        restart() {
             this.game.state.start('mainmenu', true);
         }
 

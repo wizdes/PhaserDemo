@@ -23,6 +23,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="app.css" />
+    <Content Include="assets\images\black.png" />
     <Content Include="assets\images\floor.png" />
     <Content Include="assets\images\goldCoin.png" />
     <Content Include="assets\images\player.png" />
