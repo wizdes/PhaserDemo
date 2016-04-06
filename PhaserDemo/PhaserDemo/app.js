@@ -14,6 +14,7 @@ var Namespace;
                 renderer: Phaser.AUTO
             });
             this.state.add('game', Namespace.State.Game);
+            this.state.add('charSelect', Namespace.State.charSelect);
             this.state.add('mainmenu', Namespace.State.MainMenu);
             this.state.add('preloader', Namespace.State.Preloader, true);
         }

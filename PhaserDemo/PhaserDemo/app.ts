@@ -9,6 +9,7 @@
             });
 
             this.state.add('game', State.Game);
+            this.state.add('charSelect', State.charSelect);
             this.state.add('mainmenu', State.MainMenu);
             this.state.add('preloader', State.Preloader, true);
         }

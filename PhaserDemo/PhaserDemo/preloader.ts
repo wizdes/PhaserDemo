@@ -14,6 +14,9 @@
             this.load.image('play', 'assets/images/playbutton.png');
             this.load.spritesheet('playerRun', 'assets/images/alienWalking.png', 70, 96);
             this.load.image('black', 'assets/images/black.png');
+            this.load.image('player2', 'assets/images/player.png');
+            this.load.image('charSelectImg', 'assets/images/makefg.png');
+            this.load.image('transp', 'assets/images/transp.png');
         }
 
         create() {
