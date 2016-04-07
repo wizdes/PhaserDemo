@@ -19,6 +19,7 @@ var Namespace;
                 this.probVertical = 0.4;
                 this.probMoreVertical = 0.5;
                 this.probCoin = 0.1;
+                this.numItems = 12;
             }
             Game.prototype.preload = function () {
                 this.game.time.advancedTiming = true;
@@ -42,12 +43,12 @@ var Namespace;
                 this.lastVertical = false;
                 this.verticalObstacles = this.game.add.group();
                 this.verticalObstacles.enableBody = true;
-                this.verticalObstacles.createMultiple(20, 'yellowBlock');
+                this.verticalObstacles.createMultiple(this.numItems, 'yellowBlock');
                 this.verticalObstacles.setAll('immovable', true);
                 this.verticalObstacles.setAll('outOfBoundsKill', true);
                 this.coins = this.game.add.group();
                 this.coins.enableBody = true;
-                this.coins.createMultiple(20, 'goldCoin');
+                this.coins.createMultiple(this.numItems, 'goldCoin');
                 this.coins.setAll('immovable', true);
                 //create player
                 this.player = this.game.add.sprite(250, 320, 'playerRun');
@@ -136,9 +137,21 @@ var Namespace;
                             this.lastVertical = true;
                             block = this.verticalObstacles.getFirstExists(false);
                             if (!block) {
-                                block = this.verticalObstacles.getFirstExists(true);
-                                if (block.x > this.lastFloor.body.x - this.game.world.width * 2) {
-                                    block = null;
+                                for (var j = 0; j < this.numItems; j++) {
+                                    var tempBlock = this.verticalObstacles.getAt(j);
+                                    if (tempBlock.x < this.lastFloor.body.x - this.game.world.width * 2) {
+                                        block = tempBlock;
+                                        break;
+                                    }
+                                }
+                            }
+                            if (block == null) {
+                                for (var j = 0; j < this.numItems; j++) {
+                                    var tempBlock = this.verticalObstacles.getAt(j);
+                                    if (tempBlock.x < this.lastFloor.body.x - this.game.world.width * 2) {
+                                        block = tempBlock;
+                                        break;
+                                    }
                                 }
                             }
                             if (block) {
@@ -147,11 +160,24 @@ var Namespace;
                                 block.body.immovable = true;
                             }
                             if (Math.random() < this.probMoreVertical) {
+                                block = null;
                                 block = this.verticalObstacles.getFirstExists(false);
                                 if (!block) {
-                                    block = this.verticalObstacles.getFirstExists(true);
-                                    if (block.x > this.lastFloor.body.x - this.game.world.width * 2) {
-                                        block = null;
+                                    for (var j = 0; j < this.numItems; j++) {
+                                        var tempBlock = this.verticalObstacles.getAt(j);
+                                        if (tempBlock.x < this.lastFloor.body.x - this.game.world.width * 2) {
+                                            block = tempBlock;
+                                            break;
+                                        }
+                                    }
+                                }
+                                if (block == null) {
+                                    for (var j = 0; j < this.numItems; j++) {
+                                        var tempBlock = this.verticalObstacles.getAt(j);
+                                        if (tempBlock.x < this.lastFloor.body.x - this.game.world.width * 2) {
+                                            block = tempBlock;
+                                            break;
+                                        }
                                     }
                                 }
                                 if (block) {
@@ -161,12 +187,19 @@ var Namespace;
                                 }
                             }
                             if (Math.random() < this.probCoin) {
-                                var coin = this.coins.getFirstExists(false);
+                                var coin = null;
+                                coin = this.coins.getFirstExists(false);
                                 if (!coin) {
-                                    coin = this.coins.getFirstExists(true);
-                                    if (coin.x > this.lastFloor.body.x - this.game.world.width * 2) {
-                                        coin = null;
+                                    for (var j = 0; j < this.numItems; j++) {
+                                        var tempCoin = this.coins.getAt(j);
+                                        if (tempCoin.x < this.lastFloor.body.x - this.game.world.width * 2) {
+                                            coin = tempCoin;
+                                            break;
+                                        }
                                     }
+                                }
+                                if (coin == null) {
+                                    coin = null;
                                 }
                                 if (coin) {
                                     coin.reset(this.lastFloor.body.x + this.tileSize, this.game.world.height - 5 * this.tileSize);

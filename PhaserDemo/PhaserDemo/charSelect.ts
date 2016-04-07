@@ -1,11 +1,9 @@
 ﻿module Namespace.State {
     export class charSelect extends Phaser.State {
-
-    speedMult = 0.7;
-    friction = 0.99;
-    scrollingMap;
-    colors = ["0xac81bd", "0xff5050", "0xdab5ff", "0xb5ffda", "0xfffdd0", "0xcc0000", "0x54748b", "0x4b0082", "0x80ab2f", "0xff784e", "0xe500db", "0x223c4a", "0x223c4a", "0xf1290e", "0x648080", "0xbbc1c4", "0x6f98a2", "0x71717e"];
-
+        speedMult = 0.7;
+        friction = 0.99;
+        scrollingMap;
+        colors = ["0xac81bd", "0xff5050", "0xdab5ff", "0xb5ffda", "0xfffdd0", "0xcc0000", "0x54748b", "0x4b0082", "0x80ab2f", "0xff784e", "0xe500db", "0x223c4a", "0x223c4a", "0xf1290e", "0x648080", "0xbbc1c4", "0x6f98a2", "0x71717e"];
 
         preload() {
         }
@@ -28,11 +26,11 @@
             fish.anchor.set(0.5);
             this.scrollingMap.addChild(fish);
 
-            this.scrollingMap.events.onDragStart.add(function () {
+            this.scrollingMap.events.onDragStart.add(function() {
                 this.scrollingMap.isBeingDragged = true;
                 this.scrollingMap.movingSpeed = 0;
             }, this);
-            this.scrollingMap.events.onDragStop.add(function () {
+            this.scrollingMap.events.onDragStop.add(function() {
                 this.scrollingMap.isBeingDragged = false;
             }, this);
         }
@@ -43,15 +41,13 @@
                 if (Math.abs(this.scrollingMap.children[i].world.x - this.game.width / 2) < 46 && !zoomed) {
                     this.scrollingMap.getChildAt(i).scale.setTo(1.5);
                     zoomed = true;
-                }
-                else {
+                } else {
                     this.scrollingMap.getChildAt(i).scale.setTo(1);
                 }
             }
             if (this.scrollingMap.isBeingDragged) {
                 this.scrollingMap.savedPosition = new Phaser.Point(this.scrollingMap.x, this.scrollingMap.y);
-            }
-            else {
+            } else {
                 if (this.scrollingMap.movingSpeed > 1) {
                     this.scrollingMap.x += this.scrollingMap.movingSpeed * Math.cos(this.scrollingMap.movingangle);
                     if (this.scrollingMap.x < this.game.width - this.scrollingMap.width) {
@@ -67,8 +63,7 @@
                     }
                     this.scrollingMap.movingSpeed *= this.friction;
                     this.scrollingMap.savedPosition = new Phaser.Point(this.scrollingMap.x, this.scrollingMap.y);
-                }
-                else {
+                } else {
                     var distance = this.scrollingMap.savedPosition.distance(this.scrollingMap.position);
                     var angle = this.scrollingMap.savedPosition.angle(this.scrollingMap.position);
                     if (distance > 4) {
@@ -76,7 +71,7 @@
                         this.scrollingMap.movingangle = angle;
                     }
                 }
-            }            
+            }
         }
-   }
+    }
 }
