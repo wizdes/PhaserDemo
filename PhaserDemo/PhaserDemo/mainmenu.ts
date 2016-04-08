@@ -12,6 +12,14 @@
             playButton.anchor.set(0.5);
             var charButton = this.game.add.button(0, this.game.height / 2, "charSelectImg", this.charSel);
             charButton.anchor.set(0.5);
+
+
+            if (localStorage.getItem('highscore') != null) {
+                var score_label = this.game.add.text(0, 0, localStorage.getItem('highscore'), { font: '24px Arial', fill: '#000' });
+            } else {
+                var score_label = this.game.add.text(0, 0, 0 + "", { font: '24px Arial', fill: '#000' });
+            }
+
         }
 
         playGame() {

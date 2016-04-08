@@ -13,6 +13,8 @@ module Namespace.State {
         verticalObstacles;
         pause_label;
         end_label;
+        score_label;
+        score = 0;
         choiceLabel;
         w = 600;
         h = 420;
@@ -22,7 +24,7 @@ module Namespace.State {
         probCliff = 0.3;
         probVertical = 0.4;
         probMoreVertical = 0.5;
-        probCoin = 0.1;
+        probCoin = 0.9;
         refGame;
         numItems = 12;
 
@@ -87,6 +89,10 @@ module Namespace.State {
 
             //move player with cursor keys
             this.cursors = this.game.input.keyboard.createCursorKeys();
+
+            this.score_label = this.game.add.text(0, 0, '0', { font: '24px Arial', fill: '#000' });
+
+            this.score = 0;                
 
             this.pause_label = this.game.add.text(this.w - 100, 20, 'Pause', { font: '24px Arial', fill: '#000' });
             this.pause_label.inputEnabled = true;
@@ -286,11 +292,20 @@ module Namespace.State {
         }
 
         collect(player, collectable) {
+            this.score++;
+            this.score_label.setText(this.score); 
             //remove sprite
             collectable.destroy();
         }
 
         gameOver() {
+            if (localStorage.getItem('highscore') === null) {
+                localStorage.setItem('highscore', "" + this.score);
+            }
+            else if (this.score > localStorage.getItem('highscore') + 0) {
+                localStorage.setItem('highscore', "" + this.score);
+            }
+
             this.end_label = this.game.add.text(this.w - 100, 20, 'GameOver', { font: '24px Arial', fill: '#000' });
             var logo = this.game.add.sprite(0, 0, 'black');
             logo.width = 500;

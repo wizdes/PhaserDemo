@@ -11,6 +11,7 @@ var Namespace;
             __extends(Game, _super);
             function Game() {
                 _super.apply(this, arguments);
+                this.score = 0;
                 this.w = 600;
                 this.h = 420;
                 this.levelSpeed = -250;
@@ -18,7 +19,7 @@ var Namespace;
                 this.probCliff = 0.3;
                 this.probVertical = 0.4;
                 this.probMoreVertical = 0.5;
-                this.probCoin = 0.1;
+                this.probCoin = 0.9;
                 this.numItems = 12;
             }
             Game.prototype.preload = function () {
@@ -67,6 +68,8 @@ var Namespace;
                 this.game.camera.follow(this.player);
                 //move player with cursor keys
                 this.cursors = this.game.input.keyboard.createCursorKeys();
+                this.score_label = this.game.add.text(0, 0, '0', { font: '24px Arial', fill: '#000' });
+                this.score = 0;
                 this.pause_label = this.game.add.text(this.w - 100, 20, 'Pause', { font: '24px Arial', fill: '#000' });
                 this.pause_label.inputEnabled = true;
                 this.pause_label.events.onInputDown.add(function (event) {
@@ -232,10 +235,18 @@ var Namespace;
                 }
             };
             Game.prototype.collect = function (player, collectable) {
+                this.score++;
+                this.score_label.setText(this.score);
                 //remove sprite
                 collectable.destroy();
             };
             Game.prototype.gameOver = function () {
+                if (localStorage.getItem('highscore') === null) {
+                    localStorage.setItem('highscore', "" + this.score);
+                }
+                else if (this.score > localStorage.getItem('highscore') + 0) {
+                    localStorage.setItem('highscore', "" + this.score);
+                }
                 this.end_label = this.game.add.text(this.w - 100, 20, 'GameOver', { font: '24px Arial', fill: '#000' });
                 var logo = this.game.add.sprite(0, 0, 'black');
                 logo.width = 500;
