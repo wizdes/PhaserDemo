@@ -48,6 +48,7 @@ var Namespace;
                     if (Math.abs(this.scrollingMap.children[i].world.x - this.game.width / 2) < 46 && !zoomed) {
                         this.scrollingMap.getChildAt(i).scale.setTo(1.5);
                         zoomed = true;
+                        localStorage.setItem('char', "" + i);
                     }
                     else {
                         this.scrollingMap.getChildAt(i).scale.setTo(1);

@@ -67,7 +67,15 @@ module Namespace.State {
             this.coins.setAll('immovable', true);
 
             //create player
-            this.player = this.game.add.sprite(250, 320, 'playerRun');
+            this.player = null;
+
+            // turn this into a map;
+            if (localStorage.getItem('char') == '1') {
+                this.game.add.sprite(250, 320, 'playerRun');
+            } else {
+                this.game.add.sprite(250, 320, 'playerRun);         
+            }
+
             var walk = this.player.animations.add('walk');
             this.player.play('walk', 10, true);
 
@@ -308,11 +316,12 @@ module Namespace.State {
 
             this.end_label = this.game.add.text(this.w - 100, 20, 'GameOver', { font: '24px Arial', fill: '#000' });
             var logo = this.game.add.sprite(0, 0, 'black');
+            logo.alpha = 0;
             logo.width = 500;
             logo.height = 500;
             this.pause_label.destroy();
                         
-            this.game.add.tween(logo).to({ alpha: 1 }, 500, Phaser.Easing.Linear.None, true, 0, 1000, true);
+            this.game.add.tween(logo).to({ alpha: 0.5 }, 500, Phaser.Easing.Linear.None, true, 0, 1000, true);
             this.game.time.events.add(1000, this.restart, this);
         }
 

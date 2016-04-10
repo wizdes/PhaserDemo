@@ -22,6 +22,7 @@
             var fish = this.game.add.image(this.game.width / 2 + 0, this.game.height / 2, "player");
             fish.anchor.set(0.5);
             this.scrollingMap.addChild(fish);
+
             fish = this.game.add.image(this.game.width / 2 + 90, this.game.height / 2, "player2");
             fish.anchor.set(0.5);
             this.scrollingMap.addChild(fish);
@@ -41,6 +42,7 @@
                 if (Math.abs(this.scrollingMap.children[i].world.x - this.game.width / 2) < 46 && !zoomed) {
                     this.scrollingMap.getChildAt(i).scale.setTo(1.5);
                     zoomed = true;
+                    localStorage.setItem('char', "" + i);
                 } else {
                     this.scrollingMap.getChildAt(i).scale.setTo(1);
                 }
