@@ -58,7 +58,7 @@ var Namespace;
                     this.game.add.sprite(250, 320, 'playerRun');
                 }
                 else {
-                    this.game.add.sprite(250, 320, 'playerRun);         );
+                    this.game.add.sprite(250, 320, 'playerRun');
                 }
                 var walk = this.player.animations.add('walk');
                 this.player.play('walk', 10, true);

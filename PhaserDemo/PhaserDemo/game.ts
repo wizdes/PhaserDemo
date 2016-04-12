@@ -73,7 +73,7 @@ module Namespace.State {
             if (localStorage.getItem('char') == '1') {
                 this.game.add.sprite(250, 320, 'playerRun');
             } else {
-                this.game.add.sprite(250, 320, 'playerRun);         
+                this.game.add.sprite(250, 320, 'playerRun');         
             }
 
             var walk = this.player.animations.add('walk');
@@ -125,7 +125,6 @@ module Namespace.State {
 
                 event.game.paused = false;
             }
-
         }
 
         update() {
