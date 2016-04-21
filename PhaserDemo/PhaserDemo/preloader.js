@@ -27,6 +27,9 @@ var Namespace;
                 this.load.image('player2', 'assets/images/player.png');
                 this.load.image('charSelectImg', 'assets/images/makefg.png');
                 this.load.image('transp', 'assets/images/transp.png');
+                this.load.spritesheet('running', 'assets/images/running_s.png', 70, 95);
+                this.load.spritesheet('jump', 'assets/images/jumping_s.png', 76, 96);
+                this.load.image('slide', 'assets/images/slide_s.png');
             };
             Preloader.prototype.create = function () {
                 this.loadingBar.setFillPercent(100);

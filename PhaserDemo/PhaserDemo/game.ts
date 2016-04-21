@@ -71,9 +71,9 @@ module Namespace.State {
 
             // turn this into a map;
             if (localStorage.getItem('char') == '1') {
-                this.game.add.sprite(250, 320, 'playerRun');
+                this.player = this.game.add.sprite(250, 320, 'running');
             } else {
-                this.game.add.sprite(250, 320, 'playerRun');         
+                this.player = this.game.add.sprite(250, 320, 'running');         
             }
 
             var walk = this.player.animations.add('walk');
@@ -86,7 +86,7 @@ module Namespace.State {
             this.player.body.gravity.y = 1500;
 
             //properties when the player is ducked and standing, so we can use in update()
-            var playerDuckImg = this.game.cache.getImage('playerDuck');
+            var playerDuckImg = this.game.cache.getImage('slide');
 
             this.player['duckedDimensions'] = { width: playerDuckImg.width, height: playerDuckImg.height };
             this.player['standDimensions'] = { width: this.player.width, height: this.player.height };
@@ -152,7 +152,7 @@ module Namespace.State {
                 if (!this.cursors.down.isDown && this.player.isDucked && !this.pressingDown) {
                     //change image and update the body size for the physics engine
                     //this.player.loadTexture('player');
-                    this.player.loadTexture('playerRun');
+                    this.player.loadTexture('running');
                     this.player.play('walk', 10, true);
                     this.player.body.setSize(this.player.standDimensions.width, this.player.standDimensions.height);
                     this.player.isDucked = false;
@@ -336,7 +336,7 @@ module Namespace.State {
 
         playerDuck() {
             //change image and update the body size for the physics engine
-            this.player.loadTexture('playerDuck');
+            this.player.loadTexture('slide');
             this.player.body.setSize(this.player.duckedDimensions.width, this.player.duckedDimensions.height);
       
             //we use this to keep track whether it's ducked or not
