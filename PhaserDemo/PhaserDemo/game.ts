@@ -27,6 +27,7 @@ module Namespace.State {
         probCoin = 0.9;
         refGame;
         numItems = 12;
+        playerIsFalling = 0;
 
         preload() {
             this.game.time.advancedTiming = true;
@@ -88,7 +89,7 @@ module Namespace.State {
             //properties when the player is ducked and standing, so we can use in update()
             var playerDuckImg = this.game.cache.getImage('slide');
 
-            this.player['duckedDimensions'] = { width: playerDuckImg.width, height: playerDuckImg.height };
+            this.player['duckedDimensions'] = { width: playerDuckImg.width, height: playerDuckImg.height  - 20};
             this.player['standDimensions'] = { width: this.player.width, height: this.player.height };
             this.player.anchor.setTo(0.5, 1);
 
@@ -100,7 +101,7 @@ module Namespace.State {
 
             this.score_label = this.game.add.text(0, 0, '0', { font: '24px Arial', fill: '#000' });
 
-            this.score = 0;                
+            this.score = 0;
 
             this.pause_label = this.game.add.text(this.w - 100, 20, 'Pause', { font: '24px Arial', fill: '#000' });
             this.pause_label.inputEnabled = true;
@@ -148,6 +149,18 @@ module Namespace.State {
                 } else if (this.cursors.down.isDown) {
                     this.playerDuck();
                 }
+
+                if (this.playerIsFalling == 1 && this.player.body.velocity.y > 0 && !this.player.body.touching.down ) {
+                    this.player.loadTexture('jumpd');
+                    this.playerIsFalling = 2;
+                }
+
+                if (this.playerIsFalling == 2 && this.player.body.velocity.y == 0 && this.player.body.touching.down) {
+                    this.player.loadTexture('running');
+                    this.player.play('walk', 10, true);
+                    this.player.body.setSize(this.player.standDimensions.width, this.player.standDimensions.height);
+                    this.playerIsFalling = 0;
+                }                
 
                 if (!this.cursors.down.isDown && this.player.isDucked && !this.pressingDown) {
                     //change image and update the body size for the physics engine
@@ -291,7 +304,7 @@ module Namespace.State {
                 this.player.body.velocity.x = 0;
 
                 //change sprite image
-                this.player.loadTexture('playerDead');
+                this.player.loadTexture('dead');
 
                 //go to gameover after a few miliseconds
                 this.game.time.events.add(1500, this.gameOver, this);
@@ -330,6 +343,8 @@ module Namespace.State {
 
         playerJump() {
             if (this.player.body.touching.down) {
+                this.player.loadTexture('jumpu');
+                this.playerIsFalling = 1;
                 this.player.body.velocity.y -= 700;
             }
         }

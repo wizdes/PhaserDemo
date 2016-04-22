@@ -30,6 +30,9 @@ var Namespace;
                 this.load.spritesheet('running', 'assets/images/running_s.png', 70, 95);
                 this.load.spritesheet('jump', 'assets/images/jumping_s.png', 76, 96);
                 this.load.image('slide', 'assets/images/slide_s.png');
+                this.load.image('jumpu', 'assets/images/jumping_su.png');
+                this.load.image('jumpd', 'assets/images/jumping_sd.png');
+                this.load.image('dead', 'assets/images/dead.png');
             };
             Preloader.prototype.create = function () {
                 this.loadingBar.setFillPercent(100);

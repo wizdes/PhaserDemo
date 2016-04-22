@@ -21,6 +21,7 @@ var Namespace;
                 this.probMoreVertical = 0.5;
                 this.probCoin = 0.9;
                 this.numItems = 12;
+                this.playerIsFalling = 0;
             }
             Game.prototype.preload = function () {
                 this.game.time.advancedTiming = true;
@@ -68,7 +69,7 @@ var Namespace;
                 this.player.body.gravity.y = 1500;
                 //properties when the player is ducked and standing, so we can use in update()
                 var playerDuckImg = this.game.cache.getImage('slide');
-                this.player['duckedDimensions'] = { width: playerDuckImg.width, height: playerDuckImg.height };
+                this.player['duckedDimensions'] = { width: playerDuckImg.width, height: playerDuckImg.height - 20 };
                 this.player['standDimensions'] = { width: this.player.width, height: this.player.height };
                 this.player.anchor.setTo(0.5, 1);
                 //the camera will follow the player in the world
@@ -113,6 +114,16 @@ var Namespace;
                     }
                     else if (this.cursors.down.isDown) {
                         this.playerDuck();
+                    }
+                    if (this.playerIsFalling == 1 && this.player.body.velocity.y > 0 && !this.player.body.touching.down) {
+                        this.player.loadTexture('jumpd');
+                        this.playerIsFalling = 2;
+                    }
+                    if (this.playerIsFalling == 2 && this.player.body.velocity.y == 0 && this.player.body.touching.down) {
+                        this.player.loadTexture('running');
+                        this.player.play('walk', 10, true);
+                        this.player.body.setSize(this.player.standDimensions.width, this.player.standDimensions.height);
+                        this.playerIsFalling = 0;
                     }
                     if (!this.cursors.down.isDown && this.player.isDucked && !this.pressingDown) {
                         //change image and update the body size for the physics engine
@@ -236,7 +247,7 @@ var Namespace;
                     //stop moving to the right
                     this.player.body.velocity.x = 0;
                     //change sprite image
-                    this.player.loadTexture('playerDead');
+                    this.player.loadTexture('dead');
                     //go to gameover after a few miliseconds
                     this.game.time.events.add(1500, this.gameOver, this);
                 }
@@ -268,6 +279,8 @@ var Namespace;
             };
             Game.prototype.playerJump = function () {
                 if (this.player.body.touching.down) {
+                    this.player.loadTexture('jumpu');
+                    this.playerIsFalling = 1;
                     this.player.body.velocity.y -= 700;
                 }
             };
